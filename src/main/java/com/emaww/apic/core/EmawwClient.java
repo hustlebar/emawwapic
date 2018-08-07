@@ -19,5 +19,15 @@ public class EmawwClient {
         System.out.println(sensitivityJson.toString());
     }
 
+    public void postSensitivity(JsonObject payload) {
+        URIBuilder builder = new URIBuilder().setScheme(EmawwPath.SCHEME_HTTP)
+                .setHost(EmawwPath.getSensitivity());
+        try {
+            new EmawwHttpClient().post(builder, payload);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
