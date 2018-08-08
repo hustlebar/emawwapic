@@ -18,12 +18,14 @@ public class EmawwClientTest {
 
     @Test
     public void testGetSensitivity() {
-        new EmawwClient().getSensitivity(DEVICE, OS);
+        final JsonObject sensitivity = new EmawwClient().getSensitivity(DEVICE, OS);
+        System.out.println(sensitivity.toString());
     }
 
     @Test
     public void testPostSensitivity() {
         final JsonObject payload = Json.createReader(new StringReader(PAYLOAD_SENSITIVITY)).readObject();
-        new EmawwClient().postSensitivity(payload);
+        final JsonObject response = new EmawwClient().postSensitivity(payload);
+        System.out.println(response.toString());
     }
 }

@@ -63,7 +63,7 @@ public class EmawwHttpClient {
         return responseJson;
     }
 
-    public void post(URIBuilder builder, JsonObject payload) throws Exception {
+    public JsonObject post(URIBuilder builder, JsonObject payload) throws Exception {
         CloseableHttpClient client = HttpClients.createDefault();
 
         HttpPost httpPost = new HttpPost(builder.build());
@@ -73,6 +73,11 @@ public class EmawwHttpClient {
         httpPost.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
         CloseableHttpResponse response = client.execute(httpPost);
         System.out.println("Response code: " + response.getStatusLine().getStatusCode());
+
+        InputStream responseStream = response.getEntity().getContent();
+        JsonObject responseJson = Json.createReader(responseStream).readObject();
         client.close();
+
+        return responseJson;
     }
 }
