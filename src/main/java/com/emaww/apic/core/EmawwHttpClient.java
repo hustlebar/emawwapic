@@ -1,8 +1,6 @@
 package com.emaww.apic.core;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -24,6 +22,8 @@ public class EmawwHttpClient {
     private static final String APPKEY = "MjQtemFydWIya0BnbWFpbC5jb20tMTUxOTY1NTczMQ==";
 
     public JsonObject get(URIBuilder builder) {
+        System.out.println("Enters EmawwHttpClient.get()");
+
         JsonObject responseJson = null;
 
         HttpGet httpGet = null;
@@ -33,8 +33,7 @@ public class EmawwHttpClient {
             e.printStackTrace();
         }
 
-        httpGet.addHeader("App-Id", APPID);
-        httpGet.addHeader("App-Key", APPKEY);
+        setHeaders(httpGet);
 
         CloseableHttpResponse response = null;
         InputStream responseStream = null;
@@ -64,20 +63,60 @@ public class EmawwHttpClient {
     }
 
     public JsonObject post(URIBuilder builder, JsonObject payload) throws Exception {
+        System.out.println("Enters EmawwHttpClient.post()");
+
         CloseableHttpClient client = HttpClients.createDefault();
 
         HttpPost httpPost = new HttpPost(builder.build());
-        httpPost.addHeader("App-Id", APPID);
-        httpPost.addHeader("App-Key", APPKEY);
-
+        setHeaders(httpPost);
         httpPost.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
+
         CloseableHttpResponse response = client.execute(httpPost);
         System.out.println("Response code: " + response.getStatusLine().getStatusCode());
 
-        InputStream responseStream = response.getEntity().getContent();
-        JsonObject responseJson = Json.createReader(responseStream).readObject();
         client.close();
 
-        return responseJson;
+        return getJson(response);
+    }
+
+    public JsonObject put(URIBuilder builder, JsonObject payload) throws Exception {
+        System.out.println("Enters EmawwHttpClient.put()");
+
+        CloseableHttpClient client = HttpClients.createDefault();
+
+        HttpPut httpPut = new HttpPut(builder.build());
+        setHeaders(httpPut);
+        httpPut.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
+
+        CloseableHttpResponse response = client.execute(httpPut);
+        System.out.println("Response code: " + response.getStatusLine().getStatusCode());
+
+        client.close();
+
+        return getJson(response);
+    }
+
+    public JsonObject delete(URIBuilder builder) throws Exception {
+        System.out.println("Enters EmawwHttpClient.delete()");
+        CloseableHttpClient client = HttpClients.createDefault();
+        final HttpDelete httpDelete = new HttpDelete(builder.build());
+        setHeaders(httpDelete);
+
+        CloseableHttpResponse response = client.execute(httpDelete);
+        System.out.println("Response code: " + response.getStatusLine().getStatusCode());
+
+        client.close();
+
+        return getJson(response);
+    }
+
+    private JsonObject getJson(CloseableHttpResponse response) throws Exception {
+        InputStream responseStream = response.getEntity().getContent();
+        return Json.createReader(responseStream).readObject();
+    }
+
+    private void setHeaders(HttpRequestBase httpRequest) {
+        httpRequest.addHeader("App-Id", APPID);
+        httpRequest.addHeader("App-Key", APPKEY);
     }
 }
