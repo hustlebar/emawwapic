@@ -70,13 +70,15 @@ public class EmawwHttpClient {
         HttpPost httpPost = new HttpPost(builder.build());
         setHeaders(httpPost);
         httpPost.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
+        httpPost.addHeader("Accept", ContentType.APPLICATION_JSON.toString());
 
         CloseableHttpResponse response = client.execute(httpPost);
         System.out.println("Response code: " + response.getStatusLine().getStatusCode());
 
+        final JsonObject json = getJson(response);
         client.close();
 
-        return getJson(response);
+        return json;
     }
 
     public JsonObject put(URIBuilder builder, JsonObject payload) throws Exception {
