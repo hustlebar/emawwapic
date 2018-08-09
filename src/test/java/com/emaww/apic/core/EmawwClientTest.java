@@ -2,12 +2,7 @@ package com.emaww.apic.core;
 
 import org.junit.Test;
 
-import javax.json.Json;
 import javax.json.JsonObject;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.StringReader;
 
 /**
  * @author tham
@@ -17,6 +12,8 @@ public class EmawwClientTest {
     private static final String DEVICE = "Lge LG-D802";
     public static final String OS = "7.1.2";
 
+    private static final String EXPRESSION_ID = "e73wYBYys0";
+
     @Test
     public void testGetSensitivity() {
         final JsonObject sensitivity = new EmawwClient().getSensitivity(DEVICE, OS);
@@ -25,10 +22,21 @@ public class EmawwClientTest {
 
     @Test
     public void testPostSensitivity() {
-        final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        final InputStream inputStream = classLoader.getResourceAsStream("sensitivity.json");
-        final JsonObject payload = Json.createReader(inputStream).readObject();
-        final JsonObject response = new EmawwClient().postSensitivity(payload);
+        final JsonObject response = new EmawwClient().postSensitivity(
+                EmawwJsonReader.read("sensitivity.json"));
+        System.out.println(response.toString());
+    }
+
+    @Test
+    public void testPostExpressionAnalytics() {
+        final JsonObject response = new EmawwClient().postExpressionAnalytics(
+                EmawwJsonReader.read("expression_analytics.json"));
+        System.out.println(response.toString());
+    }
+
+    @Test
+    public void testGetExpressionAnalytics() {
+        final JsonObject response = new EmawwClient().getExpressionAnalytics(EXPRESSION_ID);
         System.out.println(response.toString());
     }
 }

@@ -45,6 +45,7 @@
         <directory>src/main/resources</directory>
         <includes>
           <include>sensitivity.json</include>
+          <include>expression_analytics.json</include>
         </includes>
       </resource>
     </resources>
