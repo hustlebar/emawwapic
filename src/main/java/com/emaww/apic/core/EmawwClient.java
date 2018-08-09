@@ -11,7 +11,7 @@ import javax.json.JsonObject;
 public class EmawwClient {
     public JsonObject getSensitivity(String device, String os) {
         URIBuilder builder = new URIBuilder().setScheme(EmawwPath.SCHEME_HTTP)
-                .setHost(EmawwPath.getSensitivity())
+                .setHost(EmawwPath.sensitivity())
                 .addParameter("device", device)
                 .addParameter("os", os);
 
@@ -22,7 +22,7 @@ public class EmawwClient {
         JsonObject response = null;
 
         URIBuilder builder = new URIBuilder().setScheme(EmawwPath.SCHEME_HTTP)
-                .setHost(EmawwPath.getSensitivity());
+                .setHost(EmawwPath.sensitivity());
         try {
             response = new EmawwHttpClient().post(builder, payload);
         } catch (Exception e) {
