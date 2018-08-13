@@ -36,14 +36,14 @@ public class EmawwPath {
                 .toString();
     }
 
-    private static final String isEmotion() {
+    public static final String isEmotion() {
         return new StringBuilder(BASE_PATH)
                 .append(SLASH)
                 .append(IS_EMOTION)
                 .toString();
     }
 
-    private static final String isEmotion(String expressionId) {
+    public static final String isEmotion(String expressionId) {
         return new StringBuilder(isEmotion())
                 .append(SLASH)
                 .append(expressionId)

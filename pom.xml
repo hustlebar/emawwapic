@@ -46,6 +46,7 @@
         <includes>
           <include>sensitivity.json</include>
           <include>expression_analytics.json</include>
+          <include>emotion.json</include>
         </includes>
       </resource>
     </resources>
