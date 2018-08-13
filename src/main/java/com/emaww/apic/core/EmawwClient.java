@@ -2,7 +2,6 @@ package com.emaww.apic.core;
 
 import org.apache.http.client.utils.URIBuilder;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 /**
