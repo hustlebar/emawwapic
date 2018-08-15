@@ -3,6 +3,7 @@ package com.emaww.apic.core;
 import org.junit.Test;
 
 import javax.json.JsonObject;
+import java.util.UUID;
 
 /**
  * @author tham
@@ -50,10 +51,14 @@ public class EmawwClientTest {
         System.out.println(isEmotionJson.toString());
     }
 
-    //TODO: Why we need to pass the target emotion for this method?
     @Test
     public void testGetIsEmotion() {
         final JsonObject isEmotionJson = new EmawwClient().getIsEmotion(ISEMOTION_EXP_ID);
         System.out.println(isEmotionJson.toString());
+    }
+
+    @Test
+    public void testUUID() {
+        System.out.println(UUID.randomUUID().toString());
     }
 }
