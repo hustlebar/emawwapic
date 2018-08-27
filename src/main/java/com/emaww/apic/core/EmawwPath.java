@@ -14,6 +14,7 @@ public class EmawwPath {
     private static final String IS_EMOTION = "is_emotion";
     private static final String DIMENSION_LEVEL = "dimension_level";
     private static final String DELETE_EXPRESSION = "delete_expression";
+    private static final String AGGREGATION = "aggregations";
 
     public static final String sensitivity() {
         return new StringBuilder(BASE_PATH)
@@ -75,6 +76,13 @@ public class EmawwPath {
         return new StringBuilder(deleteExpression())
                 .append(SLASH)
                 .append(id)
+                .toString();
+    }
+
+    public static final String aggregation() {
+        return new StringBuilder(BASE_PATH)
+                .append(SLASH)
+                .append(AGGREGATION)
                 .toString();
     }
 }

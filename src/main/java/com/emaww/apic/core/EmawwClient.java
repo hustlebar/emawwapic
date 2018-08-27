@@ -65,6 +65,14 @@ public class EmawwClient {
         return invokeGet(builder);
     }
 
+    public void getAggregation() {
+        final URIBuilder builder = new URIBuilder().setScheme(EmawwPath.SCHEME_HTTP)
+                .setHost(EmawwPath.aggregation())
+                .addParameter("duration", "today");
+        final JsonObject jsonObject = invokeGet(builder);
+        System.out.println(jsonObject.toString());
+    }
+
     private JsonObject invokeGet(URIBuilder builder) {
         JsonObject response = null;
 

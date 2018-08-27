@@ -58,6 +58,11 @@ public class EmawwClientTest {
     }
 
     @Test
+    public void testAggregation() {
+        new EmawwClient().getAggregation();
+    }
+
+    @Test
     public void testUUID() {
         System.out.println(UUID.randomUUID().toString());
     }
